@@ -6,13 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import com.jfinal.core.Const;
 
 /**
  * Prop. Prop can load properties file from CLASSPATH or File object.
  */
 public class Prop {
-	
+	private static final String DEFAULT_ENCODING = "utf-8";
 	private Properties properties = null;
 	
 	/**
@@ -20,7 +19,7 @@ public class Prop {
 	 * @see #Prop(String, String)
 	 */
 	public Prop(String fileName) {
-		this(fileName, Const.DEFAULT_ENCODING);
+		this(fileName, DEFAULT_ENCODING);
 	}
 	
 	/**
@@ -63,7 +62,7 @@ public class Prop {
 	 * @see #Prop(File, String)
 	 */
 	public Prop(File file) {
-		this(file, Const.DEFAULT_ENCODING);
+		this(file, DEFAULT_ENCODING);
 	}
 	
 	/**
@@ -110,7 +109,7 @@ public class Prop {
 	}
 	
 	public Prop append(String fileName) {
-		return append(fileName, Const.DEFAULT_ENCODING);
+		return append(fileName, DEFAULT_ENCODING);
 	}
 	
 	public Prop appendIfExists(String fileName, String encoding) {
@@ -122,7 +121,7 @@ public class Prop {
 	}
 	
 	public Prop appendIfExists(String fileName) {
-		return appendIfExists(fileName, Const.DEFAULT_ENCODING);
+		return appendIfExists(fileName, DEFAULT_ENCODING);
 	}
 	
 	public Prop append(File file, String encoding) {
@@ -130,7 +129,7 @@ public class Prop {
 	}
 	
 	public Prop append(File file) {
-		return append(file, Const.DEFAULT_ENCODING);
+		return append(file, DEFAULT_ENCODING);
 	}
 	
 	public Prop appendIfExists(File file, String encoding) {
@@ -141,7 +140,7 @@ public class Prop {
 	}
 	
 	public Prop appendIfExists(File file) {
-		return appendIfExists(file, Const.DEFAULT_ENCODING);
+		return appendIfExists(file, DEFAULT_ENCODING);
 	}
 	
 	public String get(String key) {

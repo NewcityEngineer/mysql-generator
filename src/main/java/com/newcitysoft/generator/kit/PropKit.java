@@ -2,13 +2,14 @@ package com.newcitysoft.generator.kit;
 
 import java.io.File;
 import java.util.concurrent.ConcurrentHashMap;
-import com.jfinal.core.Const;
 
 /**
  * PropKit. PropKit can load properties file from CLASSPATH or File object.
  */
 public class PropKit {
-	
+
+	private static final String DEFAULT_ENCODING = "utf-8";
+
 	private static Prop prop = null;
 	private static final ConcurrentHashMap<String, Prop> map = new ConcurrentHashMap<String, Prop>();
 	
@@ -19,7 +20,7 @@ public class PropKit {
 	 * @see #use(String, String)
 	 */
 	public static Prop use(String fileName) {
-		return use(fileName, Const.DEFAULT_ENCODING);
+		return use(fileName, DEFAULT_ENCODING);
 	}
 	
 	/**
@@ -61,7 +62,7 @@ public class PropKit {
 	 * @see #use(File, String)
 	 */
 	public static Prop use(File file) {
-		return use(file, Const.DEFAULT_ENCODING);
+		return use(file, DEFAULT_ENCODING);
 	}
 	
 	/**
@@ -120,7 +121,7 @@ public class PropKit {
 	}
 	
 	public static Prop append(String fileName) {
-		return append(fileName, Const.DEFAULT_ENCODING);
+		return append(fileName, DEFAULT_ENCODING);
 	}
 	
 	public static Prop appendIfExists(String fileName, String encoding) {
@@ -132,7 +133,7 @@ public class PropKit {
 	}
 	
 	public static Prop appendIfExists(String fileName) {
-		return appendIfExists(fileName, Const.DEFAULT_ENCODING);
+		return appendIfExists(fileName, DEFAULT_ENCODING);
 	}
 	
 	public static Prop append(File file, String encoding) {
@@ -140,7 +141,7 @@ public class PropKit {
 	}
 	
 	public static Prop append(File file) {
-		return append(file, Const.DEFAULT_ENCODING);
+		return append(file, DEFAULT_ENCODING);
 	}
 	
 	public static Prop appendIfExists(File file, String encoding) {
@@ -151,7 +152,7 @@ public class PropKit {
 	}
 	
 	public static Prop appendIfExists(File file) {
-		return appendIfExists(file, Const.DEFAULT_ENCODING);
+		return appendIfExists(file, DEFAULT_ENCODING);
 	}
 	
 	public static Prop getProp() {

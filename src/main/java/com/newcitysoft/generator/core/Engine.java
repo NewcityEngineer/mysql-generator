@@ -1,7 +1,7 @@
 package com.newcitysoft.generator.core;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jfinal.kit.PathKit;
+import com.newcitysoft.generator.kit.PathKit;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;

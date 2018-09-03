@@ -1,6 +1,5 @@
 package com.newcitysoft.generator.core;
 
-import com.alibaba.fastjson.JSONObject;
 import com.newcitysoft.generator.kit.StrKit;
 
 import java.io.File;
