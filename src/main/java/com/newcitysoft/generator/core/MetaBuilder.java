@@ -1,6 +1,5 @@
 package com.newcitysoft.generator.core;
 
-
 import com.newcitysoft.generator.dialect.Dialect;
 import com.newcitysoft.generator.dialect.MysqlDialect;
 import com.newcitysoft.generator.kit.StrKit;
@@ -22,25 +21,25 @@ import java.util.TreeSet;
  * MetaBuilder
  */
 public class MetaBuilder {
-	
+
 	protected DataSource dataSource;
 	protected Dialect dialect = new MysqlDialect();
 	protected Set<String> excludedTables = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
-	
+
 	protected Connection conn = null;
 	protected DatabaseMetaData dbMeta = null;
-	
+
 	protected String[] removedTableNamePrefixes = null;
-	
+
 	protected TypeMapping typeMapping = new TypeMapping();
-	
+
 	public MetaBuilder(DataSource dataSource) {
 		if (dataSource == null) {
 			throw new IllegalArgumentException("dataSource can not be null.");
 		}
 		this.dataSource = dataSource;
 	}
-	
+
 	public void setDialect(Dialect dialect) {
 		if (dialect != null) {
 			this.dialect = dialect;
@@ -54,7 +53,7 @@ public class MetaBuilder {
 			}
 		}
 	}
-	
+
 	/**
 	 * 设置需要被移除的表名前缀，仅用于生成 modelName 与  baseModelName
 	 * 例如表名  "osc_account"，移除前缀 "osc_" 后变为 "account"
@@ -62,13 +61,13 @@ public class MetaBuilder {
 	public void setRemovedTableNamePrefixes(String... removedTableNamePrefixes) {
 		this.removedTableNamePrefixes = removedTableNamePrefixes;
 	}
-	
+
 	public void setTypeMapping(TypeMapping typeMapping) {
 		if (typeMapping != null) {
 			this.typeMapping = typeMapping;
 		}
 	}
-	
+
 	public List<TableMeta> build() {
 		System.out.println("Build TableMeta ...");
 		try {
@@ -80,7 +79,11 @@ public class MetaBuilder {
 			for (TableMeta tableMeta : ret) {
 				buildPrimaryKey(tableMeta);
 				buildColumnMetas(tableMeta);
+				buildColumnMetaOthers(tableMeta);
 			}
+
+
+
 			return ret;
 		}
 		catch (SQLException e) {
@@ -162,6 +165,18 @@ public class MetaBuilder {
 		rs.close();
 	}
 
+	protected void buildColumnMetaOthers(TableMeta tableMeta) {
+		List<ColumnMeta> columnMetas = tableMeta.getColumnMetas();
+		columnMetas.forEach(columnMeta -> {
+			try {
+				buildColumnOtherAttr(tableMeta, columnMeta);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		});
+	}
+
+
 	protected void buildPrimaryKey(TableMeta tableMeta) throws SQLException {
 		ResultSet rs = dbMeta.getPrimaryKeys(conn.getCatalog(), null, tableMeta.name);
 
@@ -202,7 +217,7 @@ public class MetaBuilder {
 		for (int i=1; i<=rsmd.getColumnCount(); i++) {
 			ColumnMeta cm = new ColumnMeta();
 			cm.name = rsmd.getColumnName(i);
-			
+
 			String typeStr = null;
 			if (dialect.isKeepByteAndShort()) {
 				int type = rsmd.getColumnType(i);
@@ -212,12 +227,12 @@ public class MetaBuilder {
 					typeStr = "java.lang.Short";
 				}
 			}
-			
+
 			if (typeStr == null) {
 				String colClassName = rsmd.getColumnClassName(i);
 				typeStr = typeMapping.getType(colClassName);
 			}
-			
+
 			if (typeStr == null) {
 				int type = rsmd.getColumnType(i);
 				if (type == Types.BINARY || type == Types.VARBINARY || type == Types.LONGVARBINARY || type == Types.BLOB) {
@@ -238,17 +253,64 @@ public class MetaBuilder {
 				}
 			}
 			cm.javaType = typeStr;
-			
+
 			// 构造字段对应的属性名 attrName
 			cm.attrName = buildAttrName(cm.name);
-			
+			// 构造其他属性
+//			buildColumnOtherAttr(tableMeta, cm, cm.name);
+
 			tableMeta.columnMetas.add(cm);
 		}
-		
+
 		rs.close();
 		stm.close();
 	}
-	
+
+	protected void buildColumnOtherAttr(TableMeta tableMeta, ColumnMeta cm) throws SQLException {
+		ResultSet rs = dbMeta.getColumns(conn.getCatalog(), null, tableMeta.name, cm.name);
+		rs.next();
+		// 长度
+		int columnSize = rs.getInt("COLUMN_SIZE");
+		if (columnSize > 0) {
+			cm.type = cm.type + "(" + columnSize;
+			// 小数位数
+			int decimalDigits = rs.getInt("DECIMAL_DIGITS");
+			if (decimalDigits > 0) {
+				cm.type = cm.type + "," + decimalDigits;
+			}
+			cm.type = cm.type + ")";
+		}
+
+		// 是否允许 NULL 值
+		cm.isNullable = rs.getString("IS_NULLABLE");
+		if (cm.isNullable == null) {
+			cm.isNullable = "";
+		}
+
+		cm.isPrimaryKey = "   ";
+		String[] keys = tableMeta.primaryKey.split(",");
+		for (String key : keys) {
+			if (key.equalsIgnoreCase(cm.name)) {
+				cm.isPrimaryKey = "PRI";
+				break;
+			}
+		}
+
+		// 默认值
+		cm.defaultValue = rs.getString("COLUMN_DEF");
+		if (cm.defaultValue == null) {
+			cm.defaultValue = "";
+		}
+
+		// 备注
+		cm.remarks = rs.getString("REMARKS");
+		if (cm.remarks == null) {
+			cm.remarks = "";
+		}
+
+		rs.close();
+	}
+
 	/**
 	 * 构造 colName 所对应的 attrName，mysql 数据库建议使用小写字段名或者驼峰字段名
 	 * Oralce 反射将得到大写字段名，所以不建议使用驼峰命名，建议使用下划线分隔单词命名法

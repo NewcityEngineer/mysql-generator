@@ -9,6 +9,10 @@ import ${cm.javaType};
 public class ${tableMeta.modelName} {
 
 <#list tableMeta.columnMetas as cm>
+    /**
+     * ${cm.remarks!}
+     */
     private ${cm.javaType?substring((cm.javaType)?last_index_of(".") + 1,(cm.javaType)?length)} ${cm.attrName};
+
 </#list>
 }

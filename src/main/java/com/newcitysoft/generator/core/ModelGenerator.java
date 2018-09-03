@@ -1,5 +1,6 @@
 package com.newcitysoft.generator.core;
 
+import com.alibaba.fastjson.JSONObject;
 import com.newcitysoft.generator.kit.StrKit;
 
 import java.io.File;
@@ -13,7 +14,7 @@ import java.util.Map;
  * Model 生成器
  */
 public class ModelGenerator {
-    private Engine engine = Engine.getInstance();
+	private Engine engine = Engine.getInstance();
 
 	protected String modelPackageName;
 	protected String modelOutputDir;
@@ -28,7 +29,7 @@ public class ModelGenerator {
 		if (StrKit.isBlank(modelOutputDir)) {
 			throw new IllegalArgumentException("modelOutputDir can not be blank.");
 		}
-		
+
 		this.modelPackageName = modelPackageName;
 		this.modelOutputDir = modelOutputDir;
 	}
@@ -44,11 +45,13 @@ public class ModelGenerator {
 	}
 
 	protected void genModelContent(TableMeta tableMeta) {
-	    Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 
-	    map.put("modelPackageName", modelPackageName);
-        map.put("tableMeta", tableMeta);
-        String ret = engine.renderToString(map);
+		map.put("modelPackageName", modelPackageName);
+		map.put("tableMeta", tableMeta);
+		System.out.println(JSONObject.toJSONString(map));
+
+		String ret = engine.renderToString(map);
 		tableMeta.modelContent = ret;
 	}
 
@@ -61,7 +64,7 @@ public class ModelGenerator {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	/**
 	 * 若 model 文件存在，则不生成，以免覆盖用户手写的代码
 	 */
@@ -70,14 +73,14 @@ public class ModelGenerator {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		
+
 		String target = modelOutputDir + File.separator + tableMeta.modelName + ".java";
-		
+
 		File file = new File(target);
 		if (file.exists()) {
 			return ;	// 若 Model 存在，不覆盖
 		}
-		
+
 		FileWriter fw = new FileWriter(file);
 		try {
 			fw.write(tableMeta.modelContent);
