@@ -1,0 +1,14 @@
+package ${modelPackageName};
+
+<#list tableMeta.columnMetas as cm>
+<#if cm.javaType?index_of("java.lang")==-1>
+import ${cm.javaType};
+</#if>
+</#list>
+
+public class ${tableMeta.modelName} {
+
+<#list tableMeta.columnMetas as cm>
+    private ${cm.javaType?substring((cm.javaType)?last_index_of(".") + 1,(cm.javaType)?length)} ${cm.attrName};
+</#list>
+}

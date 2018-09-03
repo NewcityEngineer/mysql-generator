@@ -1,5 +1,5 @@
-jdbcUrl = jdbc:mysql://localhost:3306/xine_health?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-user = 
-password = 
+jdbcUrl = jdbc:mysql://localhost:3306/springboot_demo?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+user = root
+password = root
 
 
