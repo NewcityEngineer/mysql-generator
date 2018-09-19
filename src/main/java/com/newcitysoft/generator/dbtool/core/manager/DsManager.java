@@ -1,4 +1,4 @@
-package com.newcitysoft.generator.dbtool.core;
+package com.newcitysoft.generator.dbtool.core.manager;
 
 import com.renren.jinkong.kylin.dbtool.model.DbInfo;
 

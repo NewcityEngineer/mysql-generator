@@ -1,4 +1,6 @@
-package com.newcitysoft.generator.dbtool.core;
+package com.newcitysoft.generator.dbtool.core.executor;
+
+import com.renren.jinkong.kylin.dbtool.core.DbType;
 
 /**
  * @author lixin.tian@renren-inc.com
