@@ -1,7 +1,6 @@
 package com.newcitysoft.test;
 
-
-import com.newcitysoft.generator.dbtool.core.DefaultDataSourceExecutor;
+import com.renren.jinkong.kylin.dbtool.core.executor.DefaultDataSourceExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +11,11 @@ import java.util.List;
  */
 public class DbTest2 {
 
-    public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/springboot_demo?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull";
-        String user = "root";
-        String password = "root";
+    private static final String url = "jdbc:mysql://localhost:3306/springboot_demo?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull";
+    private static final String user = "root";
+    private static final String password = "root";
 
+    public static void main(String[] args) {
         DefaultDataSourceExecutor executor = new DefaultDataSourceExecutor(url, user, password);
 
         List<Dog> list = new ArrayList<>();

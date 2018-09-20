@@ -1,10 +1,9 @@
 package com.newcitysoft.test;
 
-
-import com.newcitysoft.generator.dbtool.core.DataSourceManager;
-import com.newcitysoft.generator.dbtool.core.DbExecutor;
-import com.newcitysoft.generator.dbtool.core.DbExecutorFactory;
-import com.newcitysoft.generator.dbtool.core.DbType;
+import com.renren.jinkong.kylin.dbtool.core.DbType;
+import com.renren.jinkong.kylin.dbtool.core.executor.DbExecutor;
+import com.renren.jinkong.kylin.dbtool.core.executor.DbExecutorFactory;
+import com.renren.jinkong.kylin.dbtool.core.manager.DataSourceManager;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -16,12 +15,12 @@ import java.util.List;
  */
 public class DbTest {
 
+    private static final String url = "jdbc:mysql://localhost:3306/springboot_demo?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull";
+    private static final String user = "root";
+    private static final String password = "root";
+
     public static void main(String[] args) {
         DataSourceManager dsm = DataSourceManager.getDsm();
-
-        String url = "jdbc:mysql://localhost:3306/springboot_demo?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull";
-        String user = "root";
-        String password = "root";
 
         DataSource dataSource = dsm.getDataSource(url, user, password);
 

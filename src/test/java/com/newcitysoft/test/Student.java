@@ -2,6 +2,7 @@ package com.newcitysoft.test;
 
 import com.newcitysoft.generator.dbtool.anno.GeneratedValue;
 import com.newcitysoft.generator.dbtool.anno.Id;
+import com.newcitysoft.generator.dbtool.anno.Mapping;
 import com.newcitysoft.generator.dbtool.anno.Table;
 
 /**
@@ -13,8 +14,11 @@ public class Student {
     @Id
     @GeneratedValue
     private int id;
+    @Mapping(cellName = "姓名")
     private String name;
+    @Mapping(cellName = "地址")
     private String address;
+    @Mapping(cellName = "学号")
     private String stuNo;
 
     public String getName() {
