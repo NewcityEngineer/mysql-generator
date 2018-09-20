@@ -41,4 +41,8 @@ public final class DateKit {
         SimpleDateFormat sdf = getDateFormat(date);
         return sdf.parse(date);
     }
+
+    public static Date getDateByStr(String date) {
+        return new Date(date);
+    }
 }

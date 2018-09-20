@@ -66,6 +66,10 @@ public final class ReflectKit {
     public static Object convertType(Field field, String value) throws ParseException {
         Object result = null;
 
+        if(value == null || value.equals("")) {
+            return null;
+        }
+
         String type = field.getGenericType().toString();
 
         switch (type) {
@@ -85,7 +89,7 @@ public final class ReflectKit {
                 result = Boolean.parseBoolean(value);
                 break;
             case "class java.util.Date":
-                result = DateKit.getDate(value);
+                result = DateKit.getDateByStr(value);
                 break;
             default:
                 break;
