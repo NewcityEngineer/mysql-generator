@@ -1,9 +1,9 @@
 package com.newcitysoft.test;
 
-import com.renren.jinkong.kylin.dbtool.core.DbType;
-import com.renren.jinkong.kylin.dbtool.core.executor.DbExecutor;
-import com.renren.jinkong.kylin.dbtool.core.executor.DbExecutorFactory;
-import com.renren.jinkong.kylin.dbtool.core.manager.DataSourceManager;
+import com.newcitysoft.generator.dbtool.core.DbType;
+import com.newcitysoft.generator.dbtool.core.executor.DbExecutor;
+import com.newcitysoft.generator.dbtool.core.executor.DbExecutorFactory;
+import com.newcitysoft.generator.dbtool.core.manager.DataSourceManager;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;

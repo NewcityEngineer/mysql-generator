@@ -1,15 +1,15 @@
 package com.newcitysoft.generator.dbtool.core.executor;
 
-import com.renren.jinkong.kylin.dbtool.core.SqlGenerator;
-import com.renren.jinkong.kylin.dbtool.core.op.SqlOperation;
+import com.newcitysoft.generator.dbtool.core.SqlGenerator;
+import com.newcitysoft.generator.dbtool.core.op.SqlOperation;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.util.List;
 
-import static com.renren.jinkong.kylin.dbtool.kit.ReflectKit.getFields;
-import static com.renren.jinkong.kylin.dbtool.kit.ReflectKit.getIdField;
+import static com.newcitysoft.generator.dbtool.kit.ReflectKit.getFields;
+import static com.newcitysoft.generator.dbtool.kit.ReflectKit.getIdField;
 
 /**
  * 数据库执行器

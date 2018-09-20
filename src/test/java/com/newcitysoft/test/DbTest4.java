@@ -1,6 +1,6 @@
 package com.newcitysoft.test;
 
-import com.renren.jinkong.kylin.dbtool.core.executor.DefaultDataSourceExecutor;
+import com.newcitysoft.generator.dbtool.core.executor.DefaultDataSourceExecutor;
 import org.junit.Test;
 
 import java.util.ArrayList;

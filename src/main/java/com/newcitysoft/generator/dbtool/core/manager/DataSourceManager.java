@@ -1,7 +1,7 @@
 package com.newcitysoft.generator.dbtool.core.manager;
 
-import com.renren.jinkong.kylin.dbtool.model.DbInfo;
-import com.renren.jinkong.kylin.dbtool.plugin.DruidPlugin;
+import com.newcitysoft.generator.dbtool.model.DbInfo;
+import com.newcitysoft.generator.dbtool.plugin.DruidPlugin;
 
 import javax.sql.DataSource;
 import java.util.concurrent.ConcurrentHashMap;

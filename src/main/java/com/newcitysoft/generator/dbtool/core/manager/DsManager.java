@@ -1,6 +1,6 @@
 package com.newcitysoft.generator.dbtool.core.manager;
 
-import com.renren.jinkong.kylin.dbtool.model.DbInfo;
+import com.newcitysoft.generator.dbtool.model.DbInfo;
 
 import javax.sql.DataSource;
 

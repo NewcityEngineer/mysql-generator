@@ -2,7 +2,7 @@ package com.newcitysoft.generator.dbtool.plugin;
 
 import com.alibaba.druid.filter.Filter;
 import com.alibaba.druid.pool.DruidDataSource;
-import com.renren.jinkong.kylin.dbtool.kit.StrKit;
+import com.newcitysoft.generator.kit.StrKit;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;

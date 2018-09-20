@@ -1,13 +1,13 @@
 package com.newcitysoft.generator.dbtool.core;
 
-import com.renren.jinkong.kylin.dbtool.anno.Table;
+import com.newcitysoft.generator.dbtool.anno.Table;
 
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.renren.jinkong.kylin.dbtool.kit.ReflectKit.getFields;
-import static com.renren.jinkong.kylin.dbtool.kit.ReflectKit.getIdField;
+import static com.newcitysoft.generator.dbtool.kit.ReflectKit.getFields;
+import static com.newcitysoft.generator.dbtool.kit.ReflectKit.getIdField;
 
 /**
  * 单边动态SQL生成器
