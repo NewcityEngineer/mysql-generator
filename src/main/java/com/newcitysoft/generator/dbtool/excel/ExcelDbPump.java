@@ -16,7 +16,9 @@ public class ExcelDbPump {
 
     private File file;
     private Class clazz;
-    private AtomicInteger startRowNum = new AtomicInteger(0);
+    private AtomicInteger headRowNum = new AtomicInteger(0);
+    private AtomicInteger startRowNum = new AtomicInteger(1);
+    private AtomicInteger endRowNum = new AtomicInteger(0);
 
     private DefaultDataSourceExecutor executor;
 
@@ -38,12 +40,31 @@ public class ExcelDbPump {
     }
 
     /**
-     * 设置其实行号
+     * 设置表头行号
      *
      * @param count
      */
-    public void setStartRowNum(int count) {
-        this.startRowNum.set(count);
+    public void setHeadRowNum(int count) {
+        this.headRowNum.set(count);
+        this.startRowNum.set(count + 1);
+    }
+
+    /**
+     * 设置数据起始行号
+     *
+     * @param endRowNum
+     */
+    public void setEndRowNum(int endRowNum) {
+        this.endRowNum.set(endRowNum);
+    }
+
+    /**
+     * 设置数据结束行号
+     *
+     * @param startRowNum
+     */
+    public void setStartRowNum(int startRowNum) {
+        this.startRowNum.set(startRowNum);
     }
 
     public int execute() throws Exception {
@@ -61,7 +82,7 @@ public class ExcelDbPump {
 
         ExcelKit excelKit = new ExcelKit(file, clazz);
 
-        List list = excelKit.dataExcelMapToBean(startRowNum.get());
+        List list = excelKit.dataExcelMapToList(this.headRowNum.get(), startRowNum.get(), endRowNum.get());
 
         return executor.batchInsert(clazz, list);
     }
