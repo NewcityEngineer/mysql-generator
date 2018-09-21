@@ -35,8 +35,12 @@ public class ExcelDbPumpTest {
         pump.setFile(file);
         // 设置映射类
         pump.setClazz(MoneyDetail.class);
+        // 设置表头行号
+        pump.setHeadRowNum(1);
         // 设置起始行号
-        pump.setStartRowNum(1);
+        pump.setStartRowNum(5);
+        // 设置数据结束行号
+        pump.setEndRowNum(10);
 
         int i = pump.execute();
         System.out.println(i);
